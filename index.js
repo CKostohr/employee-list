@@ -93,3 +93,16 @@ async function addEmployee(){
     })
 }
 
+async function updateEmployeeRole() {
+    const roleChoice = await wpyAll.getRoles()
+    const employeeChoice = await wpyAll.getEmployees()
+    inquirer
+    .prompt([
+        {
+            type: 'list',
+            name: 'chooseEmployee',
+            message: 'Choose employee role to update.',
+            choices: employeeChoice
+        },
+    ])
+}
