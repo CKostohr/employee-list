@@ -104,5 +104,60 @@ async function updateEmployeeRole() {
             message: 'Choose employee role to update.',
             choices: employeeChoice
         },
-    ])
+        {
+            type: 'input',
+            name: 'updateRole',
+            message: 'What is the employees new role?',
+            choices: roleChoice
+        },
+    ]).then(async (data) => {
+        await wpyAll.updateRole(data.chooseEmployee, data.updateRole)
+        console.log('Role has been updated.')
+
+        loadQ()
+    })
 }
+async function addRole() {
+    const departmentChoice = await wpyAll.getDepartments()
+    inquirer
+    .prompt([
+        {
+            type: 'input',
+            name: 'title',
+            message: 'What is the role?'
+        },
+        {
+            type: 'input',
+            name: 'salary',
+            message: 'What is the salary?'
+        },
+        {
+            type: 'list',
+            name: 'department_id',
+            message: 'What department is the role?',
+            choices: departmentChoice
+        },
+    ]).then(async (data) => {
+        await wpyAll.addrole(data.title, data.salary, data.department_id)
+        console.log('Role created.')
+
+        loadQ()
+    })
+}
+
+async function addDepartmnet() {
+    inquirer
+    .prompt([
+        {
+            type: 'input',
+            name: 'department_name',
+            message: 'Name of department?'
+        },
+    ]).then(async (data) => {
+        await wpyAll.addDepartmnet(data.department_name)
+        console.log('Department created')
+        loadQ()
+    })
+}
+
+init()
